@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background: #f7f7f7;
+}
+
+textarea {
+    width: 100%;
+    height: 250px;
+    font-family: monospace;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background: #007BFF;
+    color: white;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+pre {
+    background: #222;
+    color: #eee;
+    padding: 15px;
+    white-space: pre-wrap;
+    border-radius: 6px;
+}
+
+/* 🌿 erreurs */
+.error {
+    background: rgba(255, 0, 0, 0.35);
+    color: white;
+}
+
+/* 🌿 succès */
+.success {
+    color: #00ff88;
+    font-weight: bold;
+}
+
+/* 🌿 surlignage OK */
+#highlighted {
+    border-radius: 6px;
+    margin-top: 10px;
+}
