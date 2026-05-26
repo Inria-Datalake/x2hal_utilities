@@ -52,16 +52,45 @@ function checkStructure() {
 
             let parts = trimmed.split('=');
             let field_value = parts.slice(1).join('=').trim();
+            let errorType = null;
 
-            let isError =
-                !field_value.endsWith(',') ||
-                (field_value.startsWith('{') && !field_value.includes('}')) ||
-                (field_value.startsWith('(') && !field_value.includes(')'));
 
-            if (isError) {
-                errors.push(`[${current_entry}] ligne ${i+1} : champ suspect`);
+
+            // Cherche la prochaine ligne non vide
+            let nextNonEmpty = "";
+
+            for (let j = i + 1; j < lines.length; j++) {
+                if (lines[j].trim() !== "") {
+                    nextNonEmpty = lines[j].trim();
+                    break;
+                }
+            }
+
+            // Vérifie si la ligne actuelle est la dernière du bloc
+            let isLastField =
+                nextNonEmpty === '}' ||
+                nextNonEmpty === '},';
+
+            // Virgule obligatoire sauf pour le dernier champ
+            if (!field_value.endsWith(',') && !isLastField) {
+                errorType = "virgule manquante";
+            }
+
+
+            else if (field_value.startsWith('{') && !field_value.includes('}')) {
+                errorType = "accolade fermante manquante";
+            }
+
+            else if (field_value.startsWith('(') && !field_value.includes(')')) {
+                errorType = "parenthèse fermante manquante";
+            }
+
+            if (errorType) {
+                errors.push(`[${current_entry}] ligne ${i+1} : ${errorType}`);
                 errorLines.add(i);
             }
+
+
 
             continue;
         }
@@ -72,7 +101,7 @@ function checkStructure() {
         }
 
         if (inEntry) {
-            errors.push(`[${current_entry}] ligne ${i+1} : structure incorrecte`);
+            errors.push(`[${current_entry}] ligne ${i+1} : structure incorrecte présence possible de sauts de ligne`);
             errorLines.add(i);
         }
     }

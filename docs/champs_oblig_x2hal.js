@@ -31,7 +31,8 @@ function checkFields() {
         const id = idMatch[1];
 
         let fields = {};
-        const regex = /(\w[\w-]*)\s*=\s*\{/g;
+        // const regex = /(\w[\w-]*)\s*=\s*\{/g;
+        const regex = /(\w[\w-]*)\s*=/g;
 
         let match;
         while ((match = regex.exec(raw)) !== null) {
@@ -39,7 +40,17 @@ function checkFields() {
         }
 
         if (requiredFields[type]) {
-            const missing = requiredFields[type].filter(f => !(f in fields));
+           // const missing = requiredFields[type].filter(f => !(f in fields));
+
+            const missing = requiredFields[type].filter(f => {
+
+                // Accepte language OU x-language
+                if (f === 'language') {
+                    return !('language' in fields) && !('x-language' in fields);
+                }
+
+                return !(f in fields);
+            });
 
             if (missing.length > 0) {
                 output += `❌ ${id} (${type}) → ${missing.join(", ")}\n`;
