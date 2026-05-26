@@ -1,17 +1,65 @@
+
+/* ==============================
+   GLOBAL
+============================== */
+
 body {
     font-family: Arial, sans-serif;
     margin: 30px;
     background: #f7f7f7;
 }
 
+/* ==============================
+   LAYOUT PRINCIPAL
+============================== */
+
+.top-container {
+    display: flex;
+    gap: 1cm; /* espace réel entre colonnes */
+    align-items: flex-start;
+}
+
+.left-panel {
+    flex: 1;
+    min-width: 0;
+}
+
+.right-panel {
+    flex: 0 0 30%;
+    max-width: 30%;
+    min-width: 30%;
+    overflow-x: hidden;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .top-container {
+        flex-direction: column;
+    }
+
+    .right-panel {
+        flex: 1;
+        max-width: 100%;
+        min-width: 100%;
+    }
+}
+
+/* ==============================
+   TEXTAREA
+============================== */
+
 textarea {
     width: 100%;
-    height: 250px;
+    height: 300px;
     font-family: monospace;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
 }
+
+/* ==============================
+   BOUTONS
+============================== */
 
 .buttons {
     margin-top: 10px;
@@ -31,6 +79,10 @@ button:hover {
     background: #0056b3;
 }
 
+/* ==============================
+   OUTPUT
+============================== */
+
 pre {
     background: #222;
     color: #eee;
@@ -39,19 +91,22 @@ pre {
     border-radius: 6px;
 }
 
-/* 🌿 erreurs */
+/* erreurs */
 .error {
-    background: rgba(255, 0, 0, 0.35);
+    background: rgba(255, 0, 0, 0.25);
     color: white;
 }
 
-/* 🌿 succès */
+/* succès */
 .success {
     color: #00ff88;
     font-weight: bold;
 }
 
-/* 🌿 surlignage OK */
+/* ==============================
+   HIGHLIGHT
+============================== */
+
 #highlighted {
     border-radius: 6px;
     margin-top: 10px;
@@ -63,6 +118,54 @@ pre {
     padding: 10px;
 }
 
-.error {
-    background-color: rgba(255, 0, 0, 0.2);
+/* ==============================
+   DROITE : SCHÉMA
+============================== */
+
+#fieldsInfo {
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.2;
+    margin-top: 10px;
+}
+
+/* ==============================
+   LIGNES CHAMPS (FORMAT BIBTEX)
+============================== */
+
+.field-line {
+    display: grid;
+    grid-template-columns: auto 20px 1fr;
+    align-items: start;
+
+    padding: 2px 0;
+    margin: 0;
+
+    line-height: 1.2;
+}
+
+/* clé = valeur sur UNE ligne propre */
+.field-name {
+    color: #111;
+    white-space: nowrap;
+}
+
+/* symbole "=" centré */
+.eq {
+    color: #888;
+    text-align: center;
+}
+
+/* valeur peut wrap */
+.field-value {
+    color: #444;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* titre du type */
+.doc-type {
+    font-weight: bold;
+    margin-bottom: 8px;
 }

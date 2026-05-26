@@ -17,12 +17,36 @@ Deux vérifications complémentaires :
 <br>• présence des champs obligatoires
 </p>
 
-<textarea id="input" placeholder="Collez votre BibTeX ici..."></textarea>
+<div class="top-container">
 
-<div class="buttons">
-    <button onclick="checkStructure()">Vérifier structure</button>
-    <button onclick="checkFields()">Vérifier champs</button>
-    <button onclick="clearAll()">Effacer</button>
+    <!-- colonne gauche -->
+    <div class="left-panel">
+
+        <h3>Texte BibTeX</h3>
+
+        <textarea id="input" placeholder="Collez votre BibTeX ici..."></textarea>
+
+        <div class="buttons">
+            <button onclick="checkStructure()">Vérifier structure</button>
+            <button onclick="checkFields()">Vérifier champs</button>
+            <button onclick="clearAll()">Effacer</button>
+        </div>
+
+    </div>
+
+    <!-- colonne droite -->
+    <div class="right-panel">
+
+        <h3>Type de document</h3>
+
+        <select id="docType" onchange="renderFields()">
+            <option value="">-- sélectionner --</option>
+        </select>
+
+        <div id="fieldsInfo"></div>
+
+    </div>
+
 </div>
 
 <h3>Résultat :</h3>
@@ -31,8 +55,10 @@ Deux vérifications complémentaires :
 <h3>Texte avec erreurs surlignées :</h3>
 <pre id="highlighted"></pre>
 
+<!-- scripts -->
 <script src="structure_bib.js"></script>
 <script src="champs_oblig_x2hal.js"></script>
+<script src="docTypeUI.js"></script>
 
 <script>
 function clearAll() {
@@ -44,5 +70,3 @@ function clearAll() {
 
 </body>
 </html>
-
-
