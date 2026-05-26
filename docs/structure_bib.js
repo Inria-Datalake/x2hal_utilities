@@ -9,7 +9,7 @@ function checkStructure() {
     let inEntry = false;
     let current_entry = "";
 
-    if (text.length > 100000) {
+    if (text.length > 500000) {
         alert("Texte trop long");
         return;
     }
@@ -116,10 +116,17 @@ function checkStructure() {
 
     // 🌿 SURBRILLANCE
     let highlighted = lines.map((line, i) => {
+
+        let lineNumber = String(i + 1).padStart(3, ' ');
+
+        let content = `${lineNumber} | ${escapeHTML(line)}`;
+
         if (errorLines.has(i)) {
-            return `<span class="error">${escapeHTML(line)}</span>`;
+            return `<span class="error">${content}</span>`;
         }
-        return escapeHTML(line);
+
+        return content;
+
     }).join('\n');
 
     let box = document.getElementById("highlighted");
