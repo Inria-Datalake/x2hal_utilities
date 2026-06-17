@@ -1,3 +1,56 @@
+function checkFieldDelimiters(fieldValue, isLastField) {
+
+    let errors = [];
+
+    // retire la virgule finale pour analyser le contenu
+    let value = fieldValue.trim();
+
+    if (value.endsWith(',')) {
+        value = value.slice(0, -1).trim();
+    }
+
+    // virgule finale
+    if (!fieldValue.trim().endsWith(',') && !isLastField) {
+        errors.push("virgule manquante");
+    }
+
+    // accolade ouvrante
+    if (value.startsWith('{')) {
+
+        if (value.endsWith(')')) {
+            errors.push("accolade ouvrante mais parenthèse fermante");
+        }
+        else if (!value.endsWith('}')) {
+            errors.push("accolade fermante manquante");
+        }
+    }
+
+    // parenthèse ouvrante
+    else if (value.startsWith('(')) {
+
+        if (value.endsWith('}')) {
+            errors.push("parenthèse ouvrante mais accolade fermante");
+        }
+        else if (!value.endsWith(')')) {
+            errors.push("parenthèse fermante manquante");
+        }
+    }
+
+    // aucun ouvrant
+    else {
+
+        if (value.endsWith('}')) {
+            errors.push("accolade ouvrante manquante");
+        }
+
+        if (value.endsWith(')')) {
+            errors.push("parenthèse ouvrante manquante");
+        }
+    }
+
+    return errors;
+}
+
 function checkStructure() {
 
     const text = document.getElementById("input").value;
@@ -71,22 +124,31 @@ function checkStructure() {
                 nextNonEmpty === '}' ||
                 nextNonEmpty === '},';
 
-            // Virgule obligatoire sauf pour le dernier champ
-            if (!field_value.endsWith(',') && !isLastField) {
-                errorType = "virgule manquante";
-            }
+            // traitement des parentheses etc
+            // if (!field_value.endsWith(',') && !isLastField) {
+            //     errorType = "virgule manquante";
+            // }
 
 
-            else if (field_value.startsWith('{') && !field_value.includes('}')) {
-                errorType = "accolade fermante manquante";
-            }
+            // else if (field_value.startsWith('{') && !field_value.includes('}')) {
+            //     errorType = "accolade fermante manquante";
+            // }
 
-            else if (field_value.startsWith('(') && !field_value.includes(')')) {
-                errorType = "parenthèse fermante manquante";
-            }
+            // else if (field_value.startsWith('(') && !field_value.includes(')')) {
+            //     errorType = "parenthèse fermante manquante";
+            // }
 
-            if (errorType) {
-                errors.push(`[${current_entry}] ligne ${i+1} : ${errorType}`);
+            // if (errorType) {
+            //     errors.push(`[${current_entry}] ligne ${i+1} : ${errorType}`);
+            //     errorLines.add(i);
+            // }
+
+            let fieldErrors = checkFieldDelimiters(field_value, isLastField);
+
+            if (fieldErrors.length > 0) {
+                errors.push(
+                    `[${current_entry}] ligne ${i + 1} : ${fieldErrors.join(" ; ")}`
+                );
                 errorLines.add(i);
             }
 
